@@ -10,7 +10,13 @@
   const toTop     = document.getElementById("toTop");
   const navLinks  = Array.from(document.querySelectorAll(".nav-link"));
   const sections  = navLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
+    // ページ内アンカー（# 始まり）のリンクだけを対象にする。
+    // 別ページへのリンク（例：自己紹介ページ）は querySelector に渡すと
+    // 不正なセレクタで例外になるため除外する。
+    .map((link) => {
+      const href = link.getAttribute("href");
+      return href && href.startsWith("#") ? document.querySelector(href) : null;
+    })
     .filter(Boolean);
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

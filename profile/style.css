@@ -1,0 +1,186 @@
+/* =========================================================
+   自己紹介ページ（演習用）スタイル
+   シンプル・モダン。外部フォントやライブラリは使わない。
+   ========================================================= */
+
+/* ----- カラートークン（ライト） ----- */
+:root {
+  --bg:        #fbfbfd;
+  --surface:   #ffffff;
+  --text:      #1c1c1e;
+  --muted:     #6b6b70;
+  --accent:    #3b6ef5;
+  --border:    #e5e5ea;
+  --radius:    12px;
+  --maxw:      720px;
+}
+
+/* ----- カラートークン（ダーク） ----- */
+/* システム設定がダークのとき（[data-theme] 未指定時のみ適用） */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:      #14141a;
+    --surface: #1e1e26;
+    --text:    #f2f2f7;
+    --muted:   #a0a0aa;
+    --accent:  #7aa2ff;
+    --border:  #33333d;
+  }
+}
+
+/* JS トグルで明示的にダークを選んだとき（システム設定より優先） */
+:root[data-theme="dark"] {
+  --bg:      #14141a;
+  --surface: #1e1e26;
+  --text:    #f2f2f7;
+  --muted:   #a0a0aa;
+  --accent:  #7aa2ff;
+  --border:  #33333d;
+}
+
+/* ----- リセット・基本 ----- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN",
+               "Yu Gothic", Meiryo, sans-serif;
+  line-height: 1.8;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 中央寄せの共通ラッパー */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 32px);
+}
+
+a { color: var(--accent); }
+
+/* ----- 上部バー（戻るリンク＋テーマ切替） ----- */
+.topbar {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 12px;
+}
+.back-link {
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.back-link:hover { text-decoration: underline; }
+
+.theme-toggle {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.4em 1em;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+
+/* ----- プロフィールヘッダー ----- */
+.profile-header {
+  text-align: center;
+  padding-block: clamp(40px, 8vw, 72px);
+}
+.avatar {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 1.2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.name {
+  margin: 0 0 0.4rem;
+  font-size: clamp(1.6rem, 5vw, 2.2rem);
+}
+.tagline {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ----- セクション共通 ----- */
+.section {
+  padding: clamp(24px, 4vw, 32px);
+  margin-bottom: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.section-title {
+  margin: 0 0 1rem;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+.section p { margin: 0 0 1rem; }
+.section p:last-child { margin-bottom: 0; }
+
+/* ----- Skills：タグ（pill） ----- */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  padding: 0.35em 0.9em;
+  font-size: 0.88rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+/* ----- Hobbies：箇条書き ----- */
+.bullet-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.bullet-list li { margin-bottom: 0.4rem; }
+.bullet-list li:last-child { margin-bottom: 0; }
+
+/* ----- Links ----- */
+.link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ----- フッター ----- */
+.profile-footer {
+  padding-block: 32px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--border);
+}
+.profile-footer p { margin: 0; }
+
+/* ----- モーションを控えたい設定に配慮 ----- */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
