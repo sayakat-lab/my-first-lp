@@ -29,6 +29,7 @@
           <li><a href="#about"  class="nav-link" data-scroll>About</a></li>
           <li><a href="#menu"   class="nav-link" data-scroll>Menu</a></li>
           <li><a href="#access" class="nav-link" data-scroll>Access</a></li>
+          <li><a href="#contact" class="nav-link" data-scroll>お問い合わせ</a></li>
         </ul>
       </nav>
 
@@ -215,6 +216,41 @@
       </div>
     </section>
 
+    <!-- ===== お問い合わせセクション ===== -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="section-eyebrow">CONTACT</p>
+          <h2 class="section-title">お問い合わせ</h2>
+          <p class="section-desc">ご予約・出張焙煎・取材のご相談など、お気軽にお送りください。</p>
+        </header>
+
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="form-row">
+            <label for="cf-name">お名前</label>
+            <input type="text" id="cf-name" name="name" autocomplete="name" />
+            <p class="form-error" data-error-for="cf-name"></p>
+          </div>
+
+          <div class="form-row">
+            <label for="cf-email">メールアドレス</label>
+            <input type="email" id="cf-email" name="email" autocomplete="email" />
+            <p class="form-error" data-error-for="cf-email"></p>
+          </div>
+
+          <div class="form-row">
+            <label for="cf-message">お問い合わせ内容</label>
+            <textarea id="cf-message" name="message" rows="6"></textarea>
+            <p class="form-error" data-error-for="cf-message"></p>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">送信する</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <!-- ===== フッター ===== -->
@@ -225,9 +261,10 @@
         <span class="brand-name">CAFÉ&nbsp;MORI</span>
       </a>
       <nav class="footer-nav" aria-label="フッターナビゲーション">
-        <a href="#about"  data-scroll>About</a>
-        <a href="#menu"   data-scroll>Menu</a>
-        <a href="#access" data-scroll>Access</a>
+        <a href="#about"   data-scroll>About</a>
+        <a href="#menu"    data-scroll>Menu</a>
+        <a href="#access"  data-scroll>Access</a>
+        <a href="#contact" data-scroll>お問い合わせ</a>
       </nav>
       <div class="footer-social">
         <a href="#" aria-label="Instagram">Instagram</a>

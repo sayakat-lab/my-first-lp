@@ -408,6 +408,59 @@ a { color: inherit; text-decoration: none; }
 .access-map iframe { width: 100%; height: 100%; border: 0; filter: grayscale(.25) contrast(1.05); }
 
 /* =========================================================
+   お問い合わせ
+   ========================================================= */
+.contact { background: var(--cream); }
+.contact .section-head { margin-inline: auto; text-align: center; }
+
+.contact-form {
+  max-width: 640px;
+  margin-inline: auto;
+}
+.form-row { margin-bottom: 1.6rem; }
+.form-row label {
+  display: block;
+  margin-bottom: .5rem;
+  font-size: .85rem;
+  letter-spacing: .1em;
+  color: var(--coffee);
+}
+.form-row input,
+.form-row textarea {
+  width: 100%;
+  padding: .9em 1.1em;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.form-row textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+.form-row input:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: var(--caramel);
+  box-shadow: 0 0 0 3px rgba(201, 138, 75, .18);
+}
+.form-row.has-error input,
+.form-row.has-error textarea {
+  border-color: #c0532f;
+  box-shadow: 0 0 0 3px rgba(192, 83, 47, .14);
+}
+
+.form-error {
+  margin: .5rem 0 0;
+  min-height: 1.2em;
+  font-size: .82rem;
+  color: #c0532f;
+}
+
+.form-actions { text-align: center; margin-top: 2rem; }
+.form-actions .btn { min-width: 200px; }
+
+/* =========================================================
    フッター
    ========================================================= */
 .site-footer {

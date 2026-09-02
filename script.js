@@ -132,6 +132,75 @@
   }
 
   /* ---------------------------------------------------------
+     お問い合わせフォームのバリデーション
+     - 空欄チェック
+     - メール形式チェック
+     - OK なら alert を表示（送信処理は行わない）
+     --------------------------------------------------------- */
+  const contactForm = document.getElementById("contactForm");
+
+  if (contactForm) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const fields = [
+      { el: contactForm.querySelector("#cf-name"),    label: "お名前" },
+      { el: contactForm.querySelector("#cf-email"),   label: "メールアドレス" },
+      { el: contactForm.querySelector("#cf-message"), label: "お問い合わせ内容" },
+    ];
+
+    function setError(field, message) {
+      const row = field.el.closest(".form-row");
+      const errorEl = contactForm.querySelector('[data-error-for="' + field.el.id + '"]');
+      if (row) row.classList.toggle("has-error", Boolean(message));
+      if (errorEl) errorEl.textContent = message || "";
+      field.el.setAttribute("aria-invalid", message ? "true" : "false");
+    }
+
+    function validateField(field) {
+      const value = field.el.value.trim();
+
+      if (!value) {
+        setError(field, field.label + "を入力してください。");
+        return false;
+      }
+      if (field.el.id === "cf-email" && !emailPattern.test(value)) {
+        setError(field, "メールアドレスの形式が正しくありません。");
+        return false;
+      }
+      setError(field, "");
+      return true;
+    }
+
+    fields.forEach(function (field) {
+      field.el.addEventListener("input", function () {
+        if (field.el.closest(".form-row").classList.contains("has-error")) {
+          validateField(field);
+        }
+      });
+      field.el.addEventListener("blur", function () { validateField(field); });
+    });
+
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      let firstInvalid = null;
+      fields.forEach(function (field) {
+        const ok = validateField(field);
+        if (!ok && !firstInvalid) firstInvalid = field.el;
+      });
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      alert("送信しました");
+      contactForm.reset();
+      fields.forEach(function (field) { setError(field, ""); });
+    });
+  }
+
+  /* ---------------------------------------------------------
      ウィンドウ拡大時にモバイルメニューを閉じる
      --------------------------------------------------------- */
   window.addEventListener("resize", function () {
