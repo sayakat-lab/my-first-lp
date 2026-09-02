@@ -1,12 +1,10 @@
 /* =========================================================
-   自己紹介ページ（演習用）スクリプト
+   CAFÉ MORI — オーナー紹介ページ スクリプト
    - フッターの年を自動表示
-   - ライト / ダークのテーマ切替（選択を localStorage に保存）
+   - スクロールに合わせて .reveal 要素をふわっと表示
    ========================================================= */
 (function () {
   "use strict";
-
-  var STORAGE_KEY = "profile-theme";
 
   /* ---------------------------------------------------------
      フッターの著作権表示の年を今年にする
@@ -17,58 +15,32 @@
   }
 
   /* ---------------------------------------------------------
-     テーマ切替
+     スクロールで .reveal をふわっと表示
+     - 動きを抑えたい設定、または IntersectionObserver 非対応の
+       ブラウザでは、最初からすべて表示する
      --------------------------------------------------------- */
-  var toggle = document.getElementById("themeToggle");
-  var root = document.documentElement;
+  var revealEls = document.querySelectorAll(".reveal");
+  var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // localStorage は環境によって読み書きで例外が出るため try/catch で包む
-  function readSavedTheme() {
-    try {
-      return localStorage.getItem(STORAGE_KEY);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function saveTheme(theme) {
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch (e) {
-      // 保存できなくても動作は継続する
-    }
-  }
-
-  // 現在の見た目がダークかどうかを返す
-  function isDark() {
-    var current = root.getAttribute("data-theme");
-    if (current === "dark") return true;
-    if (current === "light") return false;
-    // 未指定ならOSの設定に従う
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  }
-
-  // ボタンのラベルと状態を今の見た目に合わせて更新する
-  function syncToggle() {
-    if (!toggle) return;
-    var dark = isDark();
-    toggle.setAttribute("aria-pressed", String(dark));
-    toggle.textContent = dark ? "ライトモードにする" : "ダークモードにする";
-  }
-
-  // 保存済みの選択があれば復元する
-  var saved = readSavedTheme();
-  if (saved === "dark" || saved === "light") {
-    root.setAttribute("data-theme", saved);
-  }
-  syncToggle();
-
-  if (toggle) {
-    toggle.addEventListener("click", function () {
-      var next = isDark() ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      saveTheme(next);
-      syncToggle();
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealEls.forEach(function (el) {
+      el.classList.add("is-visible");
     });
+    return;
   }
+
+  var observer = new IntersectionObserver(
+    function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        obs.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+  );
+
+  revealEls.forEach(function (el) {
+    observer.observe(el);
+  });
 })();
